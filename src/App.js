@@ -5,9 +5,10 @@ import Detail from "./routes/detail.js";
 import "./App.css";
 import { useEffect, useState } from "react";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
+import axios from "axios";
 
 function App() {
-  let [shoes] = useState(data);
+  let [shoes, setshoes] = useState(data);
   let navigate = useNavigate();
 
   return (
@@ -35,10 +36,13 @@ function App() {
       </Navbar>
 
       {/* <Link to="/">홈 </Link>
-      <Link to="detail">상세페이지</Link> */}
+        <Link to="detail">상세페이지</Link> */}
 
       <Routes>
-        <Route path="/" element={<Pages shoes={shoes}></Pages>} />
+        <Route
+          path="/"
+          element={<Pages shoes={shoes} setshoes={setshoes}></Pages>}
+        />
         <Route path="/detail/:id" element={<Detail shoes={shoes} />}></Route>
         <Route
           path="*"
@@ -88,6 +92,21 @@ function Pages(props) {
             );
           })}
         </div>
+        <button
+          onClick={() => {
+            axios
+              .get("https://codingapple1.github.io/shop/data2.json")
+              .then((결과) => {
+                let copy = [...props.shoes, ...결과.data];
+                props.setshoes(copy);
+              })
+              .catch(() => {
+                console.log("실패함 ㅄ");
+              });
+          }}
+        >
+          버튼
+        </button>
       </div>
     </>
   );
