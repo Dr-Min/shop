@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Nav } from "react-bootstrap";
+import { addStock } from "./../store.js";
 
 function Detail(props) {
   let { id } = useParams();
@@ -11,12 +13,21 @@ function Detail(props) {
     return shoeid.id == id;
   });
   let [탭, 탭변경] = useState(0);
+  let dispatch = useDispatch();
+  let stock = useSelector((state) => {
+    return state.stock;
+  });
 
   useEffect(() => {
     if (isNaN(num) == true) {
       alert("어어 그러지마라. 숫자만 쓰레이, 문자 지우고 다시써 씨발럼아!!!");
     }
   }, [num]);
+
+  useEffect(() => {
+    console.log(stock);
+    console.log(realid);
+  }, [stock]);
 
   return (
     <div className="container">
@@ -42,7 +53,14 @@ function Detail(props) {
           <h4 className="pt-5">{realid.title}</h4>
           <p>{realid.content}</p>
           <p>{realid.price}원</p>
-          <button className="btn btn-danger">주문하기</button>
+          <button
+            className="btn btn-danger"
+            onClick={() => {
+              dispatch(addStock({ id: 1, name: "White and Black", count: 2 }));
+            }}
+          >
+            주문하기
+          </button>
         </div>
       </div>
 

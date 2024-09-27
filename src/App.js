@@ -1,11 +1,12 @@
 import logo from "./logo.svg";
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import data from "./data.js";
-import Detail from "./routes/detail.js";
+import Detail from "./routes/Detail.js";
 import "./App.css";
 import { useEffect, useState } from "react";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import axios from "axios";
+import Cart from "./routes/Cart.js";
 
 function App() {
   let [shoes, setshoes] = useState(data);
@@ -43,11 +44,15 @@ function App() {
           path="/"
           element={<Pages shoes={shoes} setshoes={setshoes}></Pages>}
         />
-        <Route path="/detail/:id" element={<Detail shoes={shoes} />}></Route>
+        <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
+
+        <Route path="/cart" element={<Cart />} />
+
         <Route
           path="*"
           element={<div>선생님 여기는 없는 페이지입니다만...404 어쩌구</div>}
         />
+
         <Route path="/about" element={<div></div>}>
           <Route path="member" element={<div></div>} />
           <Route path="location" element={<div></div>} />
